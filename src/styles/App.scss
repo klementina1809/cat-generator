@@ -1,0 +1,45 @@
+$main-color: rgba(207, 94, 166, 0.742);
+$main-text: rgb(246, 216, 235);
+$border-radius: 8px;
+
+#root {
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 2rem;
+	text-align: center;
+	color: $main-text;
+}
+
+.main-container {
+	width: 600px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+
+	select {
+		background-color: $main-color;
+		height: 38px;
+		border-radius: $border-radius;
+		border: none;
+	}
+
+	img {
+		border-radius: $border-radius;
+	}
+
+	button {
+		border-radius: $border-radius;
+		border: 1px solid transparent;
+		padding: 0.6em 1.2em;
+		font-size: 1em;
+		font-weight: 500;
+		font-family: inherit;
+		background-color: $main-color;
+		cursor: pointer;
+		transition: background-color 0.25s;
+
+		&:hover {
+			background-color: rgba(207, 94, 166);
+		}
+	}
+}

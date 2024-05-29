@@ -1,33 +1,28 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from "react";
+import "./styles/App.scss";
 
 function App() {
-  const [count, setCount] = useState(0)
+	const [count, setCount] = useState(0);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+	return (
+		<>
+			<div className="main-container">
+				<select name="" id="">
+					<option value="1"></option>
+					<option value="2"></option>
+					<option value="3"></option>
+				</select>
+				<img src="https://placehold.co/600x400/" alt="" />
+				<button>Generate my cat</button>
+				<p>
+					Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+					Nemo labore praesentium quasi, porro laudantium repudiandae,
+					maxime ab dicta ipsa quo possimus nisi enim quos suscipit.
+					Expedita et totam ab consectetur.
+				</p>
+			</div>
+		</>
+	);
 }
 
-export default App
+export default App;
