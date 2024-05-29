@@ -4,11 +4,17 @@ import "./styles/App.scss";
 
 function App() {
 	const [catImg, setCatImg] = useState("");
+	const [catFact, setCatFact] = useState("");
 
 	const getCat = async () => {
 		const result = await axios("https://cataas.com/cat?json=true");
 		setCatImg(result.data[0]._id);
-		console.log("result", result.data[0]._id);
+		
+	};
+	const getFact = async () => {
+		const result = await axios("https://catfact.ninja/facts?page=1");
+		console.log("result", result);
+		setCatFact(result.data.data[0].fact);
 	};
 
 	return (
@@ -20,12 +26,9 @@ function App() {
 					<option value="3"></option>
 				</select>
 				<img src={`https://cataas.com/cat/{catImg}`} alt="" />
-				<button onClick={() => getCat()}>Generate my cat</button>
+				<button onClick={() => getFact()}>Generate my cat</button>
 				<p>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-					Nemo labore praesentium quasi, porro laudantium repudiandae,
-					maxime ab dicta ipsa quo possimus nisi enim quos suscipit.
-					Expedita et totam ab consectetur.
+					{catFact}
 				</p>
 			</div>
 		</>
