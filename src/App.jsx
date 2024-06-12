@@ -8,9 +8,10 @@ function App() {
 	const [catFact, setCatFact] = useState("");
 	const [selectedTag, setSelectedTag] = useState("");
 
-	const getCat = async () => {
-		const result = await axios("https://cataas.com/cat?json=true");
-		setCatImg(result.data.id); // Assuming the API returns an object with an id property
+	const getCat = () => {
+		if (selectedTag) {
+			setCatImg(`https://cataas.com/cat/${selectedTag}`);
+		}
 	};
 
 	const getTags = async () => {
@@ -48,8 +49,15 @@ function App() {
 					</option>
 				))}
 			</select>
-			<img src={`https://cataas.com/cat/${selectedTag}`} alt="Cat" />
-			<button onClick={getFact}>Generate my cat</button>
+			{catImg && <img src={catImg} alt="Cat" />}
+			<button
+				onClick={() => {
+					getCat();
+					getFact();
+				}}
+			>
+				Generate my cat
+			</button>
 			<p>{catFact}</p>
 		</div>
 	);
