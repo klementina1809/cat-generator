@@ -46,6 +46,7 @@ function App() {
 				data={memoizedTags}
 			/>
 			<Image data={catImg} count={count} />
+			{catFact && <p>{catFact}</p>}
 			<button
 				onClick={() => {
 					getCat();
@@ -55,7 +56,6 @@ function App() {
 			>
 				Generate my cat
 			</button>
-			<p>{catFact}</p>
 		</div>
 	);
 }
