@@ -1,11 +1,13 @@
 import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
+import Image from "./components/Image";
 import "./styles/App.scss";
 
 function App() {
 	const [catImg, setCatImg] = useState("");
 	const [catTags, setCatTags] = useState([]);
 	const [catFact, setCatFact] = useState("");
+	const [count, setCount] = useState(0);
 	const [selectedTag, setSelectedTag] = useState("");
 
 	const getCat = () => {
@@ -16,7 +18,7 @@ function App() {
 
 	const getTags = async () => {
 		const result = await axios("https://cataas.com/api/tags");
-		setCatTags(result.data); // Extracting the data from the result
+		setCatTags(result.data);
 	};
 
 	const getFact = async () => {
@@ -49,11 +51,12 @@ function App() {
 					</option>
 				))}
 			</select>
-			{catImg && <img src={catImg} alt="Cat" />}
+			<Image data={catImg} count={count} />
 			<button
 				onClick={() => {
 					getCat();
 					getFact();
+					setCount((prev) => prev + 1);
 				}}
 			>
 				Generate my cat
