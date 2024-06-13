@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import Image from "./components/Image";
+import Select from "./components/Select";
 import "./styles/App.scss";
 
 function App() {
@@ -39,18 +40,11 @@ function App() {
 
 	return (
 		<div className="main-container">
-			<select
-				name="cat-tag"
-				id="cat-tag"
+			<Select
 				onChange={handleSelect}
 				value={selectedTag}
-			>
-				{memoizedTags.map((tag) => (
-					<option key={tag} value={tag}>
-						{tag}
-					</option>
-				))}
-			</select>
+				data={memoizedTags}
+			/>
 			<Image data={catImg} count={count} />
 			<button
 				onClick={() => {
