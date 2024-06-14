@@ -23,9 +23,19 @@ function App() {
 	};
 
 	const getFact = async () => {
-		const result = await axios("https://catfact.ninja/facts?page=1");
+		const number = generateRandomNumber();
+		const result = await axios(
+			`https://catfact.ninja/facts?page=${number}`
+		);
 		console.log("result", result);
 		setCatFact(result.data.data[0].fact);
+	};
+
+	const generateRandomNumber = () => {
+		const min = 1;
+		const max = 34;
+		const number = Math.floor(Math.random() * (max - min + 1)) + min;
+		return number;
 	};
 
 	const handleSelect = (event) => {
