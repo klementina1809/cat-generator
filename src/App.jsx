@@ -9,7 +9,7 @@ function App() {
 	const [catTags, setCatTags] = useState([]);
 	const [catFact, setCatFact] = useState("");
 	const [count, setCount] = useState(0);
-	const [selectedTag, setSelectedTag] = useState("");
+	const [selectedTag, setSelectedTag] = useState("Cute");
 
 	const getCat = () => {
 		if (selectedTag) {
