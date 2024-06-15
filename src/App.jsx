@@ -23,17 +23,17 @@ function App() {
 	};
 
 	const getFact = async () => {
-		const number = generateRandomNumber();
+		const number = generateRandomNumber(1, 34);
 		const result = await axios(
 			`https://catfact.ninja/facts?page=${number}`
 		);
-		console.log("result", result);
-		setCatFact(result.data.data[0].fact);
+		const element = generateRandomNumber(0, 9);
+		console.log("number", number);
+		console.log("element", element);
+		setCatFact(result.data.data[element].fact);
 	};
 
-	const generateRandomNumber = () => {
-		const min = 1;
-		const max = 34;
+	const generateRandomNumber = (min, max) => {
 		const number = Math.floor(Math.random() * (max - min + 1)) + min;
 		return number;
 	};
