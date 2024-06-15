@@ -75,19 +75,25 @@ $border-radius: 8px;
 		}
 	}
 
-	button {
-		border-radius: $border-radius;
-		border: 1px solid transparent;
-		padding: 0.6em 1.2em;
-		font-size: 1em;
-		font-weight: 500;
-		font-family: inherit;
-		background-color: $main-color;
-		cursor: pointer;
-		transition: background-color 0.25s;
+	.btns {
+		display: flex;
+		gap: 24px;
+		justify-content: center;
+		
+		button {
+			border-radius: $border-radius;
+			border: 1px solid transparent;
+			padding: 0.6em 1.2em;
+			font-size: 1em;
+			font-weight: 500;
+			font-family: inherit;
+			background-color: $main-color;
+			cursor: pointer;
+			transition: background-color 0.25s;
 
-		&:hover {
-			background-color: rgba(207, 94, 166);
+			&:hover {
+				background-color: rgba(207, 94, 166);
+			}
 		}
 	}
 }

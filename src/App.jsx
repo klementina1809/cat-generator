@@ -40,10 +40,13 @@ function App() {
 
 	const handleSelect = (event) => {
 		setSelectedTag(event.target.value);
+		getCat();
+		setCount((prev) => prev + 1);
 	};
 
 	useEffect(() => {
 		getTags();
+		getCat();
 	}, []);
 
 	const memoizedTags = useMemo(() => catTags, [catTags]);
@@ -57,15 +60,23 @@ function App() {
 			/>
 			<Image data={catImg} count={count} />
 			{catFact && <p>{catFact}</p>}
-			<button
-				onClick={() => {
-					getCat();
-					getFact();
-					setCount((prev) => prev + 1);
-				}}
-			>
-				Generate my cat
-			</button>
+			<div className="btns">
+				<button
+					onClick={() => {
+						getCat();
+						setCount((prev) => prev + 1);
+					}}
+				>
+					Generate new cat
+				</button>
+				<button
+					onClick={() => {
+						getFact();
+					}}
+				>
+					Generate new fact
+				</button>
+			</div>
 		</div>
 	);
 }
