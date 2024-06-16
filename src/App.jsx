@@ -1,5 +1,7 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import axios from "axios";
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 import Image from "./components/Image";
 import Select from "./components/Select";
 import "./styles/App.scss";
@@ -10,10 +12,13 @@ function App() {
 	const [catFact, setCatFact] = useState("");
 	const [count, setCount] = useState(0);
 	const [selectedTag, setSelectedTag] = useState("Cute");
+	const [isImageLoaded, setIsImageLoaded] = useState(false);
+	const contentRef = useRef(null);
 
 	const getCat = () => {
 		if (selectedTag) {
 			setCatImg(`https://cataas.com/cat/${selectedTag}`);
+			setIsImageLoaded(false); // Устанавливаем флаг загрузки изображения
 		}
 	};
 
@@ -28,8 +33,6 @@ function App() {
 			`https://catfact.ninja/facts?page=${number}`
 		);
 		const element = generateRandomNumber(0, 9);
-		console.log("number", number);
-		console.log("element", element);
 		setCatFact(result.data.data[element].fact);
 	};
 
@@ -51,6 +54,41 @@ function App() {
 
 	const memoizedTags = useMemo(() => catTags, [catTags]);
 
+	const handleImageLoad = useCallback(() => {
+		setIsImageLoaded(true);
+	}, []);
+
+	const handleExport = useCallback(async () => {
+		if (contentRef.current) {
+			try {
+				const { width, height } =
+					contentRef.current.getBoundingClientRect();
+				const canvas = await html2canvas(contentRef.current, {
+					useCORS: true,
+					scale: 2,
+					width: width * 2, // Устанавливаем ширину canvas в пикселях
+					height: height * 2, // Устанавливаем высоту canvas в пикселях
+				});
+				const imgData = canvas.toDataURL("image/jpeg");
+				const pdf = new jsPDF({
+					orientation: "portrait",
+					unit: "mm",
+					format: [width, height], // Устанавливаем размеры PDF документа равные размерам контейнера
+				});
+				pdf.addImage(imgData, "JPEG", 0, 0, width, height);
+				pdf.save("cat-quote.pdf");
+			} catch (error) {
+				console.error("Failed to export PDF", error);
+			}
+		}
+	}, []);
+
+	useEffect(() => {
+		if (isImageLoaded) {
+			handleExport();
+		}
+	}, [isImageLoaded, handleExport]);
+
 	return (
 		<div className="main-container">
 			<Select
@@ -58,8 +96,10 @@ function App() {
 				value={selectedTag}
 				data={memoizedTags}
 			/>
-			<Image data={catImg} count={count} />
-			{catFact && <p>{catFact}</p>}
+			<div className="content" ref={contentRef}>
+				<Image data={catImg} count={count} onLoad={handleImageLoad} />
+				{catFact && <p>{catFact}</p>}
+			</div>
 			<div className="btns">
 				<button
 					onClick={() => {
@@ -77,6 +117,7 @@ function App() {
 					Generate new fact
 				</button>
 			</div>
+			<button onClick={handleExport}>Export</button>
 		</div>
 	);
 }
