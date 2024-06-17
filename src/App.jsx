@@ -18,7 +18,7 @@ function App() {
 	const getCat = () => {
 		if (selectedTag) {
 			setCatImg(`https://cataas.com/cat/${selectedTag}`);
-			setIsImageLoaded(false); // Устанавливаем флаг загрузки изображения
+			setIsImageLoaded(false);
 		}
 	};
 
@@ -61,21 +61,26 @@ function App() {
 	const handleExport = useCallback(async () => {
 		if (contentRef.current) {
 			try {
-				const { width, height } =
-					contentRef.current.getBoundingClientRect();
 				const canvas = await html2canvas(contentRef.current, {
 					useCORS: true,
 					scale: 2,
-					width: width * 2, // Устанавливаем ширину canvas в пикселях
-					height: height * 2, // Устанавливаем высоту canvas в пикселях
 				});
 				const imgData = canvas.toDataURL("image/jpeg");
+
 				const pdf = new jsPDF({
 					orientation: "portrait",
-					unit: "mm",
-					format: [width, height], // Устанавливаем размеры PDF документа равные размерам контейнера
+					unit: "pt",
+					format: [canvas.width, canvas.height],
 				});
-				pdf.addImage(imgData, "JPEG", 0, 0, width, height);
+
+				pdf.addImage(
+					imgData,
+					"JPEG",
+					0,
+					0,
+					canvas.width,
+					canvas.height
+				);
 				pdf.save("cat-quote.pdf");
 			} catch (error) {
 				console.error("Failed to export PDF", error);
@@ -99,6 +104,9 @@ function App() {
 			<div className="content" ref={contentRef}>
 				<Image data={catImg} count={count} onLoad={handleImageLoad} />
 				{catFact && <p>{catFact}</p>}
+				<button onClick={handleExport} className="export-btn">
+					Export
+				</button>
 			</div>
 			<div className="btns">
 				<button
@@ -117,7 +125,6 @@ function App() {
 					Generate new fact
 				</button>
 			</div>
-			<button onClick={handleExport}>Export</button>
 		</div>
 	);
 }
