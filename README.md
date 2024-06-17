@@ -1,11 +1,12 @@
 # Cat Generator
 
-### About:
+### About: 
+This project is a web application that displays random cat images and facts. Users can select different tags to view various cat images, generate new cat facts, and export the displayed content as a PDF. Both the cat images and facts are fetched from the server via API requests.
 
 ### Demo:
 
 <a href="https://klementina1809.github.io/cat-generator/">
-<img src="" alt="preview" />
+<img src="public/preview.png" alt="preview" />
 </a>
 
 ### Technologies Used:
@@ -23,5 +24,5 @@
 
 ### Other Links:
 
--   [photo/tags of cats](https://cataas.com/)
+-   [photo / tags of cats](https://cataas.com/)
 -   [facts of cats](https://catfact.ninja/)
